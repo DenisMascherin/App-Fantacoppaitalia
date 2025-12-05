@@ -110,7 +110,7 @@
       "date": "4 e 11 Febbraio 2026",
       "partite": [
         { "casa": "Atalanta", "ospite": "Juventus", "risultato": "Da giocare", "fantallenatoriCoinvolti": ["Kevin Di Bernardo","Denis Mascherin"] },
-        { "casa": "Inter", "ospite": "Roma/Torino", "risultato": "Da giocare", "fantallenatoriCoinvolti": ["Federico Burello","Alex Beltrame"] },
+        { "casa": "Inter", "ospite": "Roma-Torino", "risultato": "Da giocare", "fantallenatoriCoinvolti": ["Federico Burello","Alex Beltrame"] },
         { "casa": "Bologna", "ospite": "Lazio", "risultato": "Da giocare", "fantallenatoriCoinvolti": ["Nicola Marano","Cristian Tartaro"] },
         { "casa": "Fiorentina-Como", "ospite": "Napoli", "risultato": "Da giocare", "fantallenatoriCoinvolti": ["Valentina Pozzi","Mattia Beltrame"] }
       ]
