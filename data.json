@@ -57,25 +57,25 @@
         {
           "casa": "Juventus",
           "ospite": "Udinese",
-          "risultato": "2-1",
+          "risultato": "2-0",
           "fantallenatoriCoinvolti": ["Denis Mascherin", "Kevin Sandri"]
         },
         {
           "casa": "Atalanta",
           "ospite": "Genoa",
-          "risultato": "2-1",
+          "risultato": "4-0",
           "fantallenatoriCoinvolti": ["Kevin Di Bernardo"]
         },
         {
           "casa": "Napoli",
           "ospite": "Cagliari",
-          "risultato": "2-0",
+          "risultato": "10-9 D.C.R.",
           "fantallenatoriCoinvolti": ["Mattia Beltrame"]
         },
         {
           "casa": "Inter",
           "ospite": "Venezia",
-          "risultato": "3-1",
+          "risultato": "5-1",
           "fantallenatoriCoinvolti": ["Federico Burello"]
         },
         {
@@ -87,7 +87,7 @@
         {
           "casa": "Lazio",
           "ospite": "Milan",
-          "risultato": "1-2",
+          "risultato": "1-0",
           "fantallenatoriCoinvolti": ["Cristian Tartaro", "Lorenzo Moro"]
         },
 
