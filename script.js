@@ -2,7 +2,6 @@ let allCalendarData = {};
 let currentSquadraFilter = 'all'; 
 let currentTurnoFilter = 'all'; 
 
-// MAPPA FANTALLENATORI → squadra ➜ Fantallenatore
 const fantallenatoriMap = {
     "Udinese": "Kevin Sandri",
     "Milan": "Lorenzo Moro",
@@ -36,12 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 palmares: data.palmares
             });
 
-            // Eventi filtri turno
             document.querySelectorAll(".filtro-btn").forEach(btn => {
                 btn.addEventListener("click", handleFiltroTurnoClick);
             });
 
-            // Eventi filtri squadra
             document.querySelectorAll(".filtro-squadra-btn").forEach(btn => {
                 btn.addEventListener("click", handleFiltroSquadraClick);
             });
@@ -55,9 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-/* -------------------------------------------------------------
- * POPOLA SQUADRE FANTA (Invariata)
- * ------------------------------------------------------------- */
+
 function popolaSquadreFanta(squadre) {
     const listaSquadre = document.getElementById("lista-squadre");
     listaSquadre.style.display = "none";
@@ -76,9 +71,6 @@ function popolaSquadreFanta(squadre) {
     });
 }
 
-/* -------------------------------------------------------------
- * FORMATTA NOME DEL TURNO (Invariata)
- * ------------------------------------------------------------- */
 function formattaTitoloTurno(key) {
     if (key === "trentaduesimi") return "Trentaduesimi";
     if (key === "secondoTurno") return "Secondo Turno";
@@ -90,17 +82,11 @@ function formattaTitoloTurno(key) {
     return key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1");
 }
 
-/* -------------------------------------------------------------
- * FANTALLENATORI STRING (RESTITUISCE SOLO LA LISTA DEI NOMI)
- * ------------------------------------------------------------- */
 function getFantallenatoriString(arr) {
     if (!arr || arr.length === 0) return "";
     return arr.join(", ");
 }
 
-/* -------------------------------------------------------------
- * POPOLA CALENDARIO (CORREZIONE: RIMOZIONE "Fanta: ")
- * ------------------------------------------------------------- */
 function popolaCalendario(calendario) {
     const container = document.getElementById("contenuto-calendario");
     const filtriTurni = document.getElementById("filtri-turni");
@@ -112,15 +98,11 @@ function popolaCalendario(calendario) {
     for (const turnoKey in calendario) {
         const turno = calendario[turnoKey];
         const titoloTurno = formattaTitoloTurno(turnoKey);
-
-        // Bottone filtro turno
         const btn = document.createElement("button");
         btn.classList.add("filtro-btn");
         btn.dataset.turno = turnoKey;
         btn.textContent = titoloTurno;
         filtriTurni.appendChild(btn);
-
-        // Contenitore turno
         const turnoDiv = document.createElement("div");
         turnoDiv.classList.add("turno-container", turnoKey);
 
@@ -131,8 +113,6 @@ function popolaCalendario(calendario) {
         const date = document.createElement("p");
         date.textContent = `Periodo: ${turno.date}`;
         turnoDiv.appendChild(date);
-
-        // PARTITE
         turno.partite.forEach(partita => {
             const partitaDiv = document.createElement("div");
             partitaDiv.classList.add("partita");
@@ -144,14 +124,10 @@ function popolaCalendario(calendario) {
             let ospite = `<span>${partita.ospite}</span>`;
             let qualificata = "";
 
-            // Risultato
             const risultatoDiv = document.createElement("span");
             risultatoDiv.classList.add("risultato");
             risultatoDiv.textContent = partita.risultato;
 
-            /* ---------------------------------------------------
-             * DETERMINA QUALIFICATA
-             * --------------------------------------------------- */
             if (partita.risultato.toLowerCase() !== "da giocare") {
                 let res = partita.risultato;
 
@@ -168,21 +144,14 @@ function popolaCalendario(calendario) {
             if (qualificata === partita.casa) casa = `<span class="squadra-qualificata">${partita.casa}</span>`;
             if (qualificata === partita.ospite) ospite = `<span class="squadra-qualificata">${partita.ospite}</span>`;
 
-            /* ---------------------------------------------------
-             * SEPARATORE DINAMICO
-             * --------------------------------------------------- */
             const separatore = partita.risultato.toLowerCase() === "da giocare" ? " / " : " - ";
 
             squadreDiv.innerHTML = `${casa}${separatore}${ospite}`;
-
-            // Fantallenatori
             const fantaDiv = document.createElement("div");
             fantaDiv.classList.add("fantallenatori-coinvolti");
 
             const fantaArray = partita.fantallenatoriCoinvolti || [];
             const fantaNames = getFantallenatoriString(fantaArray);
-            
-            // CORREZIONE: Mostra SOLO i nomi o l'etichetta "Nessuna squadra Fanta coinvolta"
             fantaDiv.textContent = fantaNames ? fantaNames : "Nessuna squadra Fanta coinvolta";
 
             partitaDiv.appendChild(squadreDiv);
@@ -196,9 +165,6 @@ function popolaCalendario(calendario) {
     }
 }
 
-/* -------------------------------------------------------------
- * FILTRO TURNI (Invariato)
- * ------------------------------------------------------------- */
 function handleFiltroTurnoClick(e) {
     document.querySelectorAll(".filtro-btn").forEach(btn => btn.classList.remove("active"));
     e.target.classList.add("active");
@@ -206,9 +172,6 @@ function handleFiltroTurnoClick(e) {
     applyAllFilters();
 }
 
-/* -------------------------------------------------------------
- * FILTRO SQUADRE (Invariato)
- * ------------------------------------------------------------- */
 function handleFiltroSquadraClick(e) {
     document.querySelectorAll(".filtro-squadra-btn").forEach(btn => btn.classList.remove("active"));
     e.target.classList.add("active");
@@ -216,16 +179,12 @@ function handleFiltroSquadraClick(e) {
     applyAllFilters();
 }
 
-/* -------------------------------------------------------------
- * APPLICA TUTTI I FILTRI (Il filtro per squadra non cerca "Fanta: ")
- * ------------------------------------------------------------- */
 function applyAllFilters() {
     const turni = document.querySelectorAll(".turno-container");
 
     turni.forEach(turno => {
         const turnoKey = turno.classList[1];
 
-        // 1. Controlla se il turno è selezionato (Logica di filtro turno corretta)
         const showTurnoByTurnoFilter = currentTurnoFilter === "all" || currentTurnoFilter === turnoKey;
 
         const partite = turno.querySelectorAll(".partita");
@@ -237,12 +196,10 @@ function applyAllFilters() {
             const squadreTxt = partita.querySelector(".squadre").textContent;
             const fantaTxt = partita.querySelector(".fantallenatori-coinvolti").textContent;
 
-            // 2. Filtro Squadra
             if (currentSquadraFilter !== "all") {
                 const fantallenatore = fantallenatoriMap[currentSquadraFilter];
 
                 const matchSquadra = squadreTxt.includes(currentSquadraFilter);
-                // CORREZIONE: Cerca SOLO il nome del fantallenatore nel campo a destra
                 const matchFanta = fantallenatore && fantaTxt.includes(fantallenatore);
 
                 if (!matchSquadra && !matchFanta) {
@@ -250,7 +207,6 @@ function applyAllFilters() {
                 }
             }
             
-            // 3. Applica visibilità Partita:
             if (showTurnoByTurnoFilter && showPartitaBySquadraFilter) {
                 partita.classList.remove("hidden");
                 turnoHasVisibleMatches = true; 
@@ -259,7 +215,6 @@ function applyAllFilters() {
             }
         });
 
-        // 4. Applica visibilità Turno:
         if (showTurnoByTurnoFilter && turnoHasVisibleMatches) {
             turno.classList.remove("hidden");
         } else {
@@ -268,9 +223,6 @@ function applyAllFilters() {
     });
 }
 
-/* -------------------------------------------------------------
- * POPOLA SEZIONI FINALI (Invariata)
- * ------------------------------------------------------------- */
 function popolaSezioniFinali(data) {
     document.querySelector("#classifica-finale pre").textContent = data.classificaFinale || "";
     document.querySelector("#classifica-fantallenatori pre").textContent = data.classificaFantallenatori || "";
