@@ -169,9 +169,10 @@ function popolaCalendario(calendario) {
             if (qualificata === partita.ospite) ospite = `<span class="squadra-qualificata">${partita.ospite}</span>`;
 
             /* ---------------------------------------------------
-             * SEPARATORE DINAMICO
+             * SEPARATORE DINAMICO (MODIFICATO)
+             * Il separatore è ora sempre un trattino (" - ") come richiesto.
              * --------------------------------------------------- */
-            const separatore = partita.risultato.toLowerCase() === "da giocare" ? " / " : " - ";
+            const separatore = " - "; 
 
             squadreDiv.innerHTML = `${casa}${separatore}${ospite}`;
 
